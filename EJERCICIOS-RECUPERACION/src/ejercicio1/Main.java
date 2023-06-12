@@ -1,9 +1,23 @@
 package ejercicio1;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Main {
+	
+
+	//coleccion de producto
+	static TreeSet<Producto> productos = new TreeSet<Producto>();
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param args
@@ -12,8 +26,6 @@ public class Main {
 
 		int opcion=1;
 		Scanner sc=new Scanner(System.in);
-		//coleccion de producto
-		TreeSet<Producto> productos = new TreeSet<Producto>();
 		String nombre = "";
 		double precio = 0;
 		int caducar=0;
@@ -22,17 +34,17 @@ public class Main {
 		
 		String tipoProd="";
 		
+		
+		lecturaFichero();
+
+		
+		
+		
+		
+		
 		while(opcion!=0) {
 			//menu
-			System.out.println("Bienvenido a los productos");
-			System.out.println("1. Añadir producto.");
-			System.out.println("2. Listar productos.");
-			System.out.println("3. Eliminar producto.");
-			System.out.println("4. Modificar producto.");
-			System.out.println("5. Guardar en fichero.");
-			System.out.println("0. Salir.");
-			System.out.println();
-			System.out.println("introduce la opcion: ");
+			menuOpciones();
 			
 			opcion=sc.nextInt();
 			
@@ -138,10 +150,7 @@ public class Main {
 					for(Producto p: productos) {
 						if(p.equals(producto)) {
 							//
-							System.out.println("introduce el dato del producto a modificar: ");
-							System.out.println("1: Nombre");
-							System.out.println("2: Precio");
-							System.out.println("3: Tipo (Perecedero/No perecedero)");
+							menuModificar();
 							
 							switch(opcion){
 								case 1:{
@@ -165,23 +174,28 @@ public class Main {
 								case 3:{
 									
 									if(p instanceof Perecedero) { //ver si es de tipo perecedero
-										System.out.println("Introduce los dias a caducar que tiene el producto ahora: ");
 										Perecedero per=(Perecedero) p; //el objeto creado sera 
+										System.out.println("Introduce los dias a caducar que tiene el producto ahora: ");
 										caducar=sc.nextInt();
 										sc.nextLine();
 										
-										((Perecedero) p).setCaducar(caducar);
+										per.setCaducar(caducar);
 										
 										
 									}
 									
-									if(p instanceof NoPerecedero) {
-										System.out.println("Introduce el tipo del producto no perecedero: ");
+									else if(p instanceof NoPerecedero) {
 										NoPerecedero noper=(NoPerecedero) p; //el objeto creado sera 
+										
+										System.out.println("Introduce el tipo del producto no perecedero: ");
 										tipoProd=sc.next();
 										sc.nextLine();
 										
+										
+										noper.setTipo(tipoProd);
+										
 									}
+									
 								}//c3
 								
 								
@@ -201,9 +215,8 @@ public class Main {
 			//guardar en el texto
 			case 5:{
 				
-				
-				
-				
+				//con esto podemos escribir en el archivo
+				escrituraFichero();
 				
 			}//c5
 			
@@ -223,7 +236,104 @@ public class Main {
 		
 		
 
-		//como se crea array producto
+
+		
+	}
+	
+	/**
+	 * 
+	 */
+	private static void lecturaFichero() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src\\ejercicio1\\Producto"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * menu principal del programa
+	 */
+	private static void menuOpciones() {
+		System.out.println("Bienvenido a los productos");
+		System.out.println("1. Añadir producto.");
+		System.out.println("2. Listar productos.");
+		System.out.println("3. Eliminar producto.");
+		System.out.println("4. Modificar producto.");
+		System.out.println("5. Guardar en fichero.");
+		System.out.println("0. Salir.");
+		System.out.println();
+		System.out.println("introduce la opcion: ");
+	}
+
+	
+	private static void escrituraFichero() {
+		
+		
+		try {
+			BufferedWriter bw=new BufferedWriter(new FileWriter("src\\ejercicio1\\Producto"));
+			//recorre la tabla
+			for(Producto p: productos) {
+			
+				
+				bw.write(p.nombre+";"+p.precio+";");
+				
+				
+				//mirar si el producto es perecedero
+				if(p instanceof Perecedero) {
+					Perecedero per=(Perecedero) p; //el objeto creado sera 
+					
+					
+					bw.write(String.valueOf(per.getCaducar()));
+					
+				}
+				
+				else if(p instanceof NoPerecedero) {
+					NoPerecedero noper=(NoPerecedero) p; //el objeto creado sera 
+					
+					bw.write(noper.getTipo());
+					
+				}
+				
+				bw.newLine();
+				bw.flush();
+				
+			}
+			
+			
+			
+			
+		} catch (IOException e) {
+			
+			System.out.println("Error en la apertura del fichero");
+			
+			System.out.println(e.getMessage());
+			
+		}
+	}
+
+	private static void menuModificar() {
+		System.out.println("introduce el dato del producto a modificar: ");
+		System.out.println("1: Nombre");
+		System.out.println("2: Precio");
+		System.out.println("3: Tipo (Perecedero/No perecedero)");
+	}//main method
+	
+}//class
+
+
+
+
+
+
+
+
+
+
+/*
+ *
+ * 		//como se crea array producto
 		String nombre = "";
 		double precio = 0;
 
@@ -231,7 +341,4 @@ public class Main {
 		Producto producto[]=new Producto([]) {
 			(nombre,precio)
 		};
-		
-	}//main method
-	
-}//class
+*/
