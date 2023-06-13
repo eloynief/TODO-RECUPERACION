@@ -1,7 +1,15 @@
 package ejercicio1;
 
+/**
+ * 
+ * @author enieves
+ *
+ */
 public class Perecedero extends Producto {
-	// variable que representa los dias a caducar
+	
+	/**
+	 * atributo que representa los dias a caducar
+	 */
 	private int caducar = 1;
 
 	public Perecedero(String nombre, double precio) {
@@ -30,7 +38,9 @@ public class Perecedero extends Producto {
 		
 		return super.toString() + "caducar: " + caducar + "\n";
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public double calcular(int numeroPerecedero) {
 

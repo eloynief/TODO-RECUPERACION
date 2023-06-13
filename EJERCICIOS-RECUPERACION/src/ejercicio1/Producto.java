@@ -1,8 +1,8 @@
 package ejercicio1;
 
 /**
- * 
- * @author enieves esta clase muestra
+ * esta clase muestra
+ * @author enieves 
  */
 public class Producto implements Comparable<Producto>{
 	protected String nombre = "";
@@ -22,7 +22,6 @@ public class Producto implements Comparable<Producto>{
 	
 	
 	/**
-<<<<<<< HEAD
 	 * constructor del producto que solo guarda el nombre
 	 * @param nombre
 	 */
@@ -35,11 +34,9 @@ public class Producto implements Comparable<Producto>{
 	 * constructor del producto para poder generar objetos tipo producto que guarden el nombre y el precio
 	 * @param nombre
 	 * @param precio
-=======
 	 * constructor con parametros
 	 * @param nombre es el parametro del nombre del producto
 	 * @param precio es el precio del producto en el constructor
->>>>>>> branch 'master' of https://github.com/eloynief/Recuperacion.git
 	 */
 	public Producto(String nombre, double precio) {
 		super();

@@ -36,10 +36,6 @@ public class Main {
 		
 		
 		lecturaFichero();
-
-		
-		
-		
 		
 		
 		while(opcion!=0) {
@@ -51,53 +47,7 @@ public class Main {
 			switch (opcion) {
 			//
 			case 1:{
-				
-
-				
-				System.out.println("introduce el nombre: ");
-				nombre=sc.next();
-				sc.nextLine();
-				
-				System.out.println("introduce el precio: ");
-				precio=sc.nextDouble();
-				sc.nextLine();
-				
-				System.out.println("introduce el tipo: ");
-				tipoProd=sc.nextLine();
-				//
-				
-				//si el producto es perecedero
-				if(tipoProd.equals("Perecedero")) {
-
-					System.out.println("introduce dias caducar: ");
-					//como es perecedero y tiene el elemento caducar de más
-					caducar=sc.nextInt();
-					sc.nextLine();
-					//
-					producto=new Perecedero(nombre,precio,caducar);
-					
-					//añade el producto
-					productos.add(producto);
-				}
-	
-				//si el producto no es perecedero
-				else if(tipoProd.equals("No perecedero")) {
-
-					System.out.println("introduce tipo: ");
-					tipo=sc.next();
-					sc.nextLine();
-					
-					//
-					producto=new NoPerecedero(nombre,precio,tipo);
-					
-					//añade el producto
-					productos.add(producto);
-					
-				}
-				else {
-					//si el tipo no es valido no se añade el producto
-					System.out.println("Tipo no valido");
-				}
+				añadirProducto(sc);
 				
 				
 				
@@ -138,74 +88,7 @@ public class Main {
 			
 			//modificar producto
 			case 4:{
-				System.out.println("introduce el nombre del producto a modificar: ");
-				
-				//
-				nombre=sc.next();
-				//crea objeto tipo producto del constructor de solo nombre
-				producto=new Producto(nombre);
-				
-				//si está en la lista
-				if(productos.contains(producto)) {
-					for(Producto p: productos) {
-						if(p.equals(producto)) {
-							//
-							menuModificar();
-							
-							switch(opcion){
-								case 1:{
-									System.out.println("Introduce el nombre nuevo: ");
-									nombre=sc.next();
-									sc.nextLine();
-									p.setNombre(nombre); //sirve para reemplazar valores
-									
-									
-								}//c1
-								
-								case 2:{
-									System.out.println("Introduce el nuevo precio del producto: ");
-									precio=sc.nextDouble();
-									sc.nextLine();
-									p.setPrecio(precio); //sirve para reemplazar valores
-									
-									
-								}//c2
-								
-								case 3:{
-									
-									if(p instanceof Perecedero) { //ver si es de tipo perecedero
-										Perecedero per=(Perecedero) p; //el objeto creado sera 
-										System.out.println("Introduce los dias a caducar que tiene el producto ahora: ");
-										caducar=sc.nextInt();
-										sc.nextLine();
-										
-										per.setCaducar(caducar);
-										
-										
-									}
-									
-									else if(p instanceof NoPerecedero) {
-										NoPerecedero noper=(NoPerecedero) p; //el objeto creado sera 
-										
-										System.out.println("Introduce el tipo del producto no perecedero: ");
-										tipoProd=sc.next();
-										sc.nextLine();
-										
-										
-										noper.setTipo(tipoProd);
-										
-									}
-									
-								}//c3
-								
-								
-								
-								
-							}//cierre de switch
-							
-						}//cierre de if de contains producto
-					}//cierre de for
-				}//cierre de if
+				opcion = modificarProducto(opcion, sc);
 				
 				break;
 			}//c4
@@ -238,6 +121,142 @@ public class Main {
 
 
 		
+	}
+	
+	
+	
+	private static int modificarProducto(int opcion, Scanner sc) {
+		String nombre;
+		double precio;
+		int caducar;
+		Producto producto;
+		String tipoProd;
+		System.out.println("introduce el nombre del producto a modificar: ");
+		
+		//
+		nombre=sc.next();
+		//crea objeto tipo producto del constructor de solo nombre
+		producto=new Producto(nombre);
+		
+		//si está en la lista
+		if(productos.contains(producto)) {
+			for(Producto p: productos) {
+				if(p.equals(producto)) {
+					//
+					menuModificar();
+					
+					System.out.println("Introduce la opción(1=Perecedero/2=No perecedero: ");
+					opcion=sc.nextInt();
+					
+					switch(opcion){
+						case 1:{
+							System.out.println("Introduce el nombre nuevo: ");
+							nombre=sc.next();
+							sc.nextLine();
+							p.setNombre(nombre); //sirve para reemplazar valores
+							break;
+							
+						}//c1
+						
+						case 2:{
+							System.out.println("Introduce el nuevo precio del producto: ");
+							precio=sc.nextDouble();
+							sc.nextLine();
+							p.setPrecio(precio); //sirve para reemplazar valores
+							break;
+							
+						}//c2
+						
+						case 3:{
+							
+							if(p instanceof Perecedero) { //ver si es de tipo perecedero
+								Perecedero per=(Perecedero) p; //el objeto creado sera 
+								System.out.println("Introduce los dias a caducar que tiene el producto ahora: ");
+								caducar=sc.nextInt();
+								sc.nextLine();
+								
+								per.setCaducar(caducar);
+								
+								
+							}
+							
+							else if(p instanceof NoPerecedero) {
+								NoPerecedero noper=(NoPerecedero) p; //el objeto creado sera 
+								
+								System.out.println("Introduce el tipo del producto no perecedero: ");
+								tipoProd=sc.nextLine();
+								sc.nextLine();
+								
+								
+								noper.setTipo(tipoProd);
+								
+							}
+							break;
+							
+						}//c3
+						
+						
+						
+						
+					}//cierre de switch
+					
+				}//cierre de if de contains producto
+			}//cierre de for
+		}//cierre de if
+		return opcion;
+	}
+
+	private static void añadirProducto(Scanner sc) {
+		String nombre;
+		double precio;
+		int caducar;
+		String tipo;
+		Producto producto;
+		String tipoProd;
+		System.out.println("introduce el nombre: ");
+		nombre=sc.next();
+		sc.nextLine();
+		
+		System.out.println("introduce el precio: ");
+		precio=sc.nextDouble();
+		sc.nextLine();
+		
+		System.out.println("introduce el tipo: ");
+		tipoProd=sc.nextLine();
+		//
+		
+		//si el producto es perecedero
+		if(tipoProd.equals("Perecedero")) {
+
+			System.out.println("introduce dias caducar: ");
+			//como es perecedero y tiene el elemento caducar de más
+			caducar=sc.nextInt();
+			sc.nextLine();
+			//
+			producto=new Perecedero(nombre,precio,caducar);
+			
+			//añade el producto
+			productos.add(producto);
+		}
+
+		//si el producto no es perecedero
+		else if(tipoProd.equals("No perecedero")) {
+
+			System.out.println("introduce tipo: ");
+			tipo=sc.next();
+			sc.nextLine();
+			
+			//
+			producto=new NoPerecedero(nombre,precio,tipo);
+			
+			//añade el producto
+			productos.add(producto);
+			
+		}
+		else {
+			//si el tipo no es valido no se añade el producto
+			System.out.println("Tipo no valido");
+		}
 	}
 	
 	/**
@@ -277,7 +296,7 @@ public class Main {
 			for(Producto p: productos) {
 			
 				
-				bw.write(p.nombre+";"+p.precio+";");
+				bw.write(p.getNombre()+";"+p.getPrecio()+";");
 				
 				
 				//mirar si el producto es perecedero
