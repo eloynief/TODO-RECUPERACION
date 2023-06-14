@@ -12,7 +12,7 @@ public class Television extends Electrodomestico{
 		super(codigo,precio,peso);
 	}
 
-	public Television(int codigo, double precio, colors color, consumo energia,int peso,int resolucion, boolean sintonizador) {
+	public Television(int codigo, double precio, String color, char energia,int peso,int resolucion, boolean sintonizador) {
 		super(codigo,precio,color,energia,peso);
 		this.resolucion = resolucion;
 		this.sintonizador = sintonizador;

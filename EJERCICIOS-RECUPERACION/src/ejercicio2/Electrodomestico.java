@@ -135,7 +135,7 @@ public class Electrodomestico implements Comparable<Electrodomestico>{
 	}//cierre comprobar consumo
 	
 	
-	public void comprobarColor(String color) {
+	public void comprobarColor(String color) {// ver si esto esta vbien o no
 		
 		if(color.equals("blanco")) {
 			this.color=colors.blanco;
