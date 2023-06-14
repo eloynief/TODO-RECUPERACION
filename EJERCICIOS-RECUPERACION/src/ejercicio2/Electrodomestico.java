@@ -20,23 +20,19 @@ public class Electrodomestico implements Comparable<Electrodomestico>{
 	int peso=5;
 	
 	public Electrodomestico() {
-		super();
 	}
 	
 	public Electrodomestico(int codigo) {
-		super();
 		this.codigo = codigo;
 	}
 	
 	public Electrodomestico(int codigo, double precio, int peso) {
-		super();
 		this.codigo = codigo;
 		this.precio = precio;
 		this.peso = peso;
 	}
 	
 	public Electrodomestico(int codigo, double precio, String color, char energia, int peso) {
-		super();
 		this.codigo = codigo;
 		this.precio = precio;
 		comprobarColor(color);
