@@ -264,12 +264,43 @@ public class Main {
 	 */
 	private static void lecturaFichero() {
 		try {
+			Producto prod=null;
 			BufferedReader br = new BufferedReader(new FileReader("src\\ejercicio1\\Producto"));
+			String linea=br.readLine();
+			while(linea!=null) {//mientras que la linea tenga contenido dentro
+				String[] datos=linea.split(";");//recoge cada dato de la linea que recoge las variables de los productos
+				String nombre=datos[0];//recoge el nombre en la primera posicion
+				double precio=Double.parseDouble(datos[1]);//
+				
+				try {//ocurre asi si es perecedero
+					//si el producto es perecedero, captura los dias a caducar
+					int caducar=Integer.parseInt(datos[2]);//dias a caducar
+					prod= new Perecedero(nombre,precio,caducar);
+				}catch(NumberFormatException e){//si no es perecedero, entonces captura esto
+					String tipo =datos[2];
+					
+					prod=new NoPerecedero(nombre,precio,tipo);
+				}finally {//finalmente se añade al producto
+					productos.add(prod);
+					
+				}
+				
+				linea=br.readLine();//lee la siguiente linea	
+			}
+			
+			br.close();
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
-	}
+	
+		
+		
+		
+		
+	}//lectura fichero
 	
 	/**
 	 * menu principal del programa
